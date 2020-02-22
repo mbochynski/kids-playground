@@ -6,37 +6,39 @@ const mousePosition = {
   y: window.innerHeight / 2
 };
 
-window.onmousemove = function (e) {
+window.onmousemove = function(e) {
   mousePosition.x = e.clientX;
   mousePosition.y = e.clientY;
-}
+};
 
 function generateRandomColor() {
   var s = "0123456789ABCDEF";
   var color = "#";
   for (var i = 0; i < 6; i++) {
-    color += s[Math.ceil(Math.random() * 15)]
+    color += s[Math.ceil(Math.random() * 15)];
   }
-  return color
+  return color;
 }
 
 var tracePoints = [];
 window.onload = function myfunction() {
-  canvas = document.getElementById('mouse-path');
-  canvasContext = canvas.getContext('2d');
+  canvas = document.getElementById("mouse-path");
+  canvasContext = canvas.getContext("2d");
 
   for (var i = 0; i < 10; i++) {
-    tracePoints[i] = new TracePoint(window.innerWidth / 2, window.innerHeight / 2);
+    tracePoints[i] = new TracePoint(
+      window.innerWidth / 2,
+      window.innerHeight / 2
+    );
   }
 
   resize();
-  animate()
-}
+  animate();
+};
 
-window.onresize = function () {
+window.onresize = function() {
   resize();
-}
-
+};
 
 function resize() {
   canvas.height = window.innerHeight;
@@ -53,7 +55,7 @@ function TracePoint(x, y) {
   this.radius = Math.random() * 150;
 }
 
-TracePoint.prototype.draw = function () {
+TracePoint.prototype.draw = function() {
   const previousPosition = {
     x: this.x,
     y: this.y
@@ -71,13 +73,13 @@ TracePoint.prototype.draw = function () {
   canvasContext.lineTo(this.x, this.y);
   canvasContext.stroke();
   canvasContext.closePath();
-}
+};
 
 function animate() {
   requestAnimationFrame(animate);
   canvasContext.fillStyle = "rgba(0,0,0,0.05)";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-  tracePoints.forEach(function (tracePoint, i) {
+  tracePoints.forEach(function(tracePoint, i) {
     tracePoint.draw();
   });
 }
