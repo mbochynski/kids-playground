@@ -25,15 +25,24 @@ window.onload = function myfunction() {
   canvas = document.getElementById("mouse-path");
   canvasContext = canvas.getContext("2d");
 
-  for (var i = 0; i < 10; i++) {
-    tracePoints[i] = new TracePoint(
-      window.innerWidth / 2,
-      window.innerHeight / 2
-    );
+  resize();
+
+  this.canvasContext.save();
+
+  this.canvasContext.translate(75, 75);
+
+  const slices = 8;
+  for (let i = 0; i < slices; ++i) {
+    this.canvasContext.rotate((Math.PI * 2) / slices);
+    canvasContext.beginPath();
+    canvasContext.moveTo(0, 0);
+    this.canvasContext.lineTo(0 + 50, 0);
+    canvasContext.arc(0, 0, 50, 0, (Math.PI * 2) / slices, false);
+    this.canvasContext.fillStyle = this.generateRandomColor();
+    canvasContext.fill();
   }
 
-  resize();
-  animate();
+  this.canvasContext.restore();
 };
 
 window.onresize = function() {
